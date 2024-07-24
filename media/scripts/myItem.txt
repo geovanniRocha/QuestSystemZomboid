@@ -1,0 +1,32 @@
+module MyMod {
+    imports {
+        Base
+    }
+    item MyItem
+    {
+        Type         = Normal,
+        DisplayName  = My First Item,
+        Icon         = MyIcon,
+        Weight       = 0.1,
+        DisappearOnUse = FALSE,
+    }   
+    recipe Use MyItem
+    {
+        keep MyItem,
+        Result:MyItem,
+        RemoveResultItem:true,
+        Time:50.0,
+        OnCanPerform: QuestSystemMyItemOnCanPerform,
+    }
+
+    item StashMapQuestSys2
+    {
+        DisplayCategory = Cartography,
+        Type    =   Map,
+        DisplayName =  Quest System,
+        Icon    =   Map,
+        Weight  =   0.1,
+        Map =   StashMapQuestSys2,
+        WorldStaticModel = Map,
+    }
+}
