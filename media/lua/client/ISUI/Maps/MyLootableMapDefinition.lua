@@ -195,12 +195,12 @@ function MapUtils.overlayPaper(mapUI)
 end
 
 function MapUtils.revealKnownArea(mapUI)
-	local mapAPI = mapUI.javaObject:getAPIv1()
-	local x1 = mapAPI:getMinXInSquares()
-	local y1 = mapAPI:getMinYInSquares()
-	local x2 = mapAPI:getMaxXInSquares()
-	local y2 = mapAPI:getMaxYInSquares()
-	WorldMapVisited.getInstance():setKnownInSquares(x1, y1, x2, y2)
+	-- local mapAPI = mapUI.javaObject:getAPIv1()
+	-- local x1 = mapAPI:getMinXInSquares()
+	-- local y1 = mapAPI:getMinYInSquares()
+	-- local x2 = mapAPI:getMaxXInSquares()
+	-- local y2 = mapAPI:getMaxYInSquares()
+	-- WorldMapVisited.getInstance():setKnownInSquares(x1, y1, x2, y2)
 end
 
 -----
@@ -231,25 +231,31 @@ local function overlayPNG(mapUI, x, y, scale, layerName, tex, alpha)
 	layer:setBoundsInSquares(x, y, x + texture:getWidth() * scale, y + texture:getHeight() * scale)
 end
 
-local function overlayPNG3(mapUI, x, y, scale, tex)
+local function overlayPNG3(mapUI, x, y, scale, tex, alpha)
+	local texture = getTexture(tex)
+	if not texture then return end
 	local mapAPI = mapUI.javaObject:getAPIv1()
 	local styleAPI = mapAPI:getStyleAPI()
 	local layer = styleAPI:newTextureLayer("lootMapPNG")
 	layer:setMinZoom(MINZ)
-	local texture = getTexture(tex)
-	layer:addFill(MINZ, 255, 255, 255, 128)
+	layer:addFill(MINZ, 255, 255, 255, (alpha or 1.0) * 255)
 	layer:addTexture(MINZ, tex)
-	layer:setBoundsInSquares(x, y, x + texture:getWidth() * scale , y + texture:getHeight() * scale )
+	layer:setBoundsInSquares(x - texture:getWidth() * scale / 2, y - texture:getHeight() * scale / 2, x + texture:getWidth() * scale / 2 , y + texture:getHeight() * scale / 2 )
 end
 
 LootMaps.Init.StashMapQuestSys2 = function(mapUI)
-	local x = 7900
-	local y = 11140
-	local offset = 100
+	local x = MapLocation[MapLocation.currentMission].x
+	local y = MapLocation[MapLocation.currentMission].y
+	local roundX = Math.round( x / 1000) * 1000
+	local roundY = Math.round( y / 1000) * 1000
+	local mapSize = MapLocation.offset or 1000
+	local radius = MapLocation.pointRadius or 0.5
 	local mapAPI = mapUI.javaObject:getAPIv1()
 	MapUtils.initDirectoryMapData(mapUI, 'media/maps/Muldraugh, KY')
 	MapUtils.initDefaultStyleV1(mapUI)
-	-- replaceWaterStyle(mapUI)
-	mapAPI:setBoundsInSquares(x, y, x+offset, y+offset)
+	overlayPNG3(mapUI, x, y, radius, "media/textures/worldMap/circle_center.png")
+	mapAPI:setBoundsInSquares(roundX-mapSize/2, roundY-mapSize/2, roundX+mapSize/2, roundY+mapSize/2)
 	MapUtils.overlayPaper(mapUI)
 end
+
+
