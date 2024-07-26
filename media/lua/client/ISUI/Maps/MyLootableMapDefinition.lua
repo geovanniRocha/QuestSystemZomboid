@@ -244,8 +244,8 @@ local function overlayPNG3(mapUI, x, y, scale, tex, alpha)
 end
 
 LootMaps.Init.StashMapQuestSys2 = function(mapUI)
-	local x = MapLocation[MapLocation.currentMission].x
-	local y = MapLocation[MapLocation.currentMission].y
+	local x = MapLocation[MapLocation.currentMission].x  or 0 
+	local y = MapLocation[MapLocation.currentMission].y  or 0 
 	local roundX = Math.round( x / 1000) * 1000
 	local roundY = Math.round( y / 1000) * 1000
 	local mapSize = MapLocation.offset or 1000
