@@ -7,13 +7,13 @@ function QuestSystemMyItemOnCanPerform(recipe, player, item)
 	return false
 end
 
-function GetDistance (x1, y1, x2, y2)
+function QuestSys_GetDistance (x1, y1, x2, y2)
     local dx = x2 - x1
     local dy = y2 - y1
     return math.sqrt(dx * dx + dy * dy)
 end
 
-function GetDirection(playerX, playerY, missionX, missionY)
+function QuestSys_GetDirection(playerX, playerY, missionX, missionY)
     local dx = missionX - playerX
     local dy = missionY - playerY
     local angle = Math.atan(dy / dx)
@@ -40,9 +40,9 @@ local QuestSys_ISCraftAction_perform = ISCraftAction.perform
 function ISCraftAction:perform()
     QuestSys_ISCraftAction_perform(self)
 	if self.recipe and self.recipe:getOriginalname() == "Use MyItem" and self.item and self.item:getType() == "MyItem" then
-		local d = GetDistance(getPlayer():getX(),getPlayer():getY(),GetCurrentMission().x,GetCurrentMission().y)
-		local dir = GetDirection(getPlayer():getX(),getPlayer():getY(),GetCurrentMission().x,GetCurrentMission().y)
-		if(d > 10) then
+		local d = QuestSys_GetDistance(getPlayer():getX(),getPlayer():getY(),GetCurrentMission().x,GetCurrentMission().y)
+		local dir = QuestSys_GetDirection(getPlayer():getX(),getPlayer():getY(),GetCurrentMission().x,GetCurrentMission().y)
+		if(d > MapLocation.distanceToWaypoint) then
 			getPlayer():Say("Estamos a ".. Math.round(d).." ".. dir .. " metros")
 		else
 			getPlayer():Say("Consegui as informações, ja tenho o proximo local")
