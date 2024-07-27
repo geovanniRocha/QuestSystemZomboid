@@ -5,9 +5,13 @@ local function onClientCommandRec(module, command, player, data)
     if command == 'DestinationReached' then
         MapLocation.currentMission = ZombRandBetween(1,#MapLocation) 
         sendServerCommand("QuestSystem", 'NextQuest', MapLocation)
-    end
-    if command == 'GetDestination' then
+    elseif command == 'GetDestination' then
         sendServerCommand("QuestSystem", 'NextQuest', MapLocation)
     end
 end
 Events.OnClientCommand.Add(onClientCommandRec)
+
+local function OnConnectedServer()
+	sendServerCommand("QuestSystem", 'NextQuest', MapLocation)
+end
+Events.OnConnected.Add(OnConnectedServer)

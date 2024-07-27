@@ -5,7 +5,7 @@ module MyMod {
     item MyItem
     {
         Type         = Normal,
-        DisplayName  = My First Item,
+        DisplayName  = Discovery Journal,
         Icon         = MyIcon,
         Weight       = 0.1,
         DisappearOnUse = FALSE,
@@ -23,7 +23,7 @@ module MyMod {
     {
         DisplayCategory = Cartography,
         Type    =   Map,
-        DisplayName =  Quest System,
+        DisplayName =  Discovery Map,
         Icon    =   Map,
         Weight  =   0.1,
         Map =   StashMapQuestSys2,

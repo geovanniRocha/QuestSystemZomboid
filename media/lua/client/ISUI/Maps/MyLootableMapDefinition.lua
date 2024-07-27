@@ -253,7 +253,7 @@ LootMaps.Init.StashMapQuestSys2 = function(mapUI)
 	local mapAPI = mapUI.javaObject:getAPIv1()
 	MapUtils.initDirectoryMapData(mapUI, 'media/maps/Muldraugh, KY')
 	MapUtils.initDefaultStyleV1(mapUI)
-	overlayPNG3(mapUI, x, y, radius, "media/textures/worldMap/circle_center.png")
+	overlayPNG3(mapUI, x, y, radius, "media/textures/worldMap/handdrawCircle.png")
 	mapAPI:setBoundsInSquares(roundX-mapSize/2, roundY-mapSize/2, roundX+mapSize/2, roundY+mapSize/2)
 	MapUtils.overlayPaper(mapUI)
 end
