@@ -2,3 +2,15 @@ MapLocation = {{x=7296,y=8388},{x=7252,y=8378},{x=7258,y=8431},{x=5499,y=9582},{
 MapLocation.Visited = {}
 MapLocation.currentMission = 1
 MapLocation.pointRadius = 0.3
+
+function LogDebug(level, str, d)
+
+    local l = ""
+    local dumper = d
+    
+    if level  == 1 then l = "DEBUG:" end
+    if level  == 2 then l = "WARN:" end
+    if level  == 3 then l = "ERROR:" end
+        
+    print(l.."QuestSystem - ".. str .. " Dumped: "..tostring(dumper).." END QuestSystem")
+end

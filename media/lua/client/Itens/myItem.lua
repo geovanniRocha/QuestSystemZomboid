@@ -12,7 +12,11 @@ local QuestSys_ISCraftAction_perform = ISCraftAction.perform
 function ISCraftAction:perform()
     QuestSys_ISCraftAction_perform(self)
 	if self.recipe and self.recipe:getOriginalname() == "Use MyItem" and self.item and self.item:getType() == "MyItem" then
-		sendClientCommand(getPlayer(),"QuestSystem", "DestinationReached", {})
+		out = {}
+		LogDebug(1, "QuestSystem-DestinationReached", out)
+		sendClientCommand(getPlayer(),'QuestSystem','DestinationReached', {})
+		
+
 
 		-- MapLocation.currentMission = Math.round(Math.random()*#MapLocation)	
 		-- table.insert(MapLocation.Visited, MapLocation[MapLocation.currentMission])
@@ -25,11 +29,14 @@ function ISCraftAction:perform()
 	end
 end
 
-QuestSystemServerRec = function (module, command, args)
-	if not module == "QuestSystem" then return end
-	if command == "NextQuest" then
-		debugger()
-		MapLocation = args
-	end
+local function onserverCommandRec (module, command, args)
+
+	if not module == 'QuestSystem' then return end
+	if command ~= 'NextQuest' then return end
+	MapLocation = args
+	
+	LogDebug(1, "location", args[args.currentMission]) 
 end
-Events.OnServerCommand.Add(QuestSystemServerRec)
+Events.OnServerCommand.Add(onserverCommandRec)
+
+
