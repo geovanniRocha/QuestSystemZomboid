@@ -5,5 +5,16 @@ MapLocation.pointRadius = 0.3
 MapLocation.distanceToWaypoint = 10
 
 function GetCurrentMission()
-    return MapLocation[MapLocation.currentMission]    
+    return MapLocation[MapLocation.currentMission]  
+
+function LogDebug(level, str, d)
+
+    local l = ""
+    local dumper = d
+    
+    if level  == 1 then l = "DEBUG:" end
+    if level  == 2 then l = "WARN:" end
+    if level  == 3 then l = "ERROR:" end
+        
+    print(l.."QuestSystem - ".. str .. " Dumped: "..tostring(dumper).." END QuestSystem")
 end
