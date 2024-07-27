@@ -7,6 +7,7 @@ MapLocation.distanceToWaypoint = 10
 function GetCurrentMission()
     return MapLocation[MapLocation.currentMission]  
 
+
 function LogDebug(level, str, d)
 
     local l = ""
