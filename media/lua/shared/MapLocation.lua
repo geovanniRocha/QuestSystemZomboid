@@ -5,7 +5,8 @@ MapLocation.pointRadius = 0.3
 MapLocation.distanceToWaypoint = 10
 
 function GetCurrentMission()
-    return MapLocation[MapLocation.currentMission] 
+    return MapLocation[MapLocation.currentMission]  
+
 
 function LogDebug(level, str, d)
 

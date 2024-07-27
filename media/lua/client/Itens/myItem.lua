@@ -69,6 +69,10 @@ local QuestSys_ISCraftAction_perform = ISCraftAction.perform
 function ISCraftAction:perform()
     QuestSys_ISCraftAction_perform(self)
 	if self.recipe and self.recipe:getOriginalname() == "Use MyItem" and self.item and self.item:getType() == "MyItem" then
+
+		LogDebug(1, "QuestSystem-DestinationReached", out)
+		sendClientCommand(getPlayer(),'QuestSystem','DestinationReached', {})
+
 		local d = QuestSys_GetDistance(getPlayer():getX(),getPlayer():getY(),GetCurrentMission().x,GetCurrentMission().y)
 		local dir = QuestSys_GetDirection(getPlayer():getX(),getPlayer():getY(),GetCurrentMission().x,GetCurrentMission().y)
 		if(d > MapLocation.distanceToWaypoint) then
@@ -76,7 +80,6 @@ function ISCraftAction:perform()
 		else
 			getPlayer():Say("Consegui as informações, ja tenho o proximo local")
 			sendClientCommand(getPlayer(),'QuestSystem','DestinationReached', {})
-
 		end
 	end
 end
