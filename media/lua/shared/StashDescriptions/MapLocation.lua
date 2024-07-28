@@ -2,7 +2,7 @@ MapLocation = {{x=7296,y=8388},{x=7252,y=8378},{x=7258,y=8431},{x=5499,y=9582},{
 MapLocation.Visited = {}
 MapLocation.currentMission = 1
 MapLocation.pointRadius = 0.3
-MapLocation.distanceToWaypoint = 10
+MapLocation.distanceToWaypoint = 20
 
 
 function GetCurrentMission()
