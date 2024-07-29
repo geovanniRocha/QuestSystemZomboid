@@ -8,9 +8,10 @@ MapLocation.distanceToWaypoint = 20
 function GetCurrentMission()
     return MapLocation[MapLocation.currentMission] 
 end
+local ENABLELOGS = false
 
 function LogDebug(level, str, d)
-
+    if ENABLELOGS then return end
     local l = ""
     local dumper = d
 
