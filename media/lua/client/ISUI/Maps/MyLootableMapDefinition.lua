@@ -195,12 +195,12 @@ function MapUtils.overlayPaper(mapUI)
 end
 
 function MapUtils.revealKnownArea(mapUI)
-	-- local mapAPI = mapUI.javaObject:getAPIv1()
-	-- local x1 = mapAPI:getMinXInSquares()
-	-- local y1 = mapAPI:getMinYInSquares()
-	-- local x2 = mapAPI:getMaxXInSquares()
-	-- local y2 = mapAPI:getMaxYInSquares()
-	-- WorldMapVisited.getInstance():setKnownInSquares(x1, y1, x2, y2)
+	local mapAPI = mapUI.javaObject:getAPIv1()
+	local x1 = mapAPI:getMinXInSquares()
+	local y1 = mapAPI:getMinYInSquares()
+	local x2 = mapAPI:getMaxXInSquares()
+	local y2 = mapAPI:getMaxYInSquares()
+	WorldMapVisited.getInstance():setKnownInSquares(x1, y1, x2, y2)
 end
 
 -----
@@ -244,12 +244,13 @@ local function overlayPNG3(mapUI, x, y, scale, tex, alpha)
 end
 
 LootMaps.Init.StashMapQuestSys2 = function(mapUI)
-	local x = MapLocation[MapLocation.currentMission].x  or 0 
-	local y = MapLocation[MapLocation.currentMission].y  or 0 
+	local x = QuestSystem:GetCurrentMission().x  or 0 
+	local y = QuestSystem:GetCurrentMission().y  or 0 
 	local roundX = Math.round( x / 1000) * 1000
 	local roundY = Math.round( y / 1000) * 1000
-	local mapSize = MapLocation.offset or 1000
-	local radius = MapLocation.pointRadius or 0.5
+	local mapSize = QuestSystem:GetMapSize() or 1000
+	local radius = QuestSystem:GetPointRadius() or 0.5
+
 	local mapAPI = mapUI.javaObject:getAPIv1()
 	MapUtils.initDirectoryMapData(mapUI, 'media/maps/Muldraugh, KY')
 	MapUtils.initDefaultStyleV1(mapUI)

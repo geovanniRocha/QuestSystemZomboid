@@ -1,34 +1,29 @@
 
 local function onClientCommandRec(module, command, player, data)
-    
 	if module ~= 'QuestSystem' then return end
     if command == 'DestinationReached' then
-        local rand = ZombRandBetween(1,#MapLocation)
-        if rand ==  MapLocation.currentMission then
-            rand = ZombRandBetween(1,#MapLocation)
-        end
-        MapLocation.currentMission =  rand
+        QuestSystem:NextMission() 
         QuestSysSaveData()
-        sendServerCommand("QuestSystem", 'NextQuest', MapLocation)
+        sendServerCommand("QuestSystem", 'NextQuest', QuestSystem)
     elseif command == 'GetDestination' then
-        sendServerCommand("QuestSystem", 'NextQuest', MapLocation)
+        sendServerCommand("QuestSystem", 'NextQuest', QuestSystem)
     end
 end
 
 local function OnConnectedServer()
-	sendServerCommand("QuestSystem", 'NextQuest', MapLocation)
+	sendServerCommand("QuestSystem", 'NextQuest', QuestSystem)
 end
 
 
 local function OnServerStarted()
-    MapLocation.currentMission = QuestSysLoadData()
-    sendServerCommand("QuestSystem", 'NextQuest', MapLocation)  
+    QuestSystem:SetCurrentMission(QuestSysLoadData()) 
+    sendServerCommand("QuestSystem", 'NextQuest', QuestSystem)  
 end
 
 
 function QuestSysSaveData ()
 	output = getFileOutput("QuestSysProgress.save");
-	output:writeInt(MapLocation.currentMission);
+	output:writeInt(QuestSystem.GetCurrentMission());
 	endFileOutput();
 end
 
@@ -44,5 +39,6 @@ end
 
 
 Events.OnLoad.Add(OnServerStarted)
+Events.OnServerStarted.Add(OnServerStarted)
 Events.OnClientCommand.Add(onClientCommandRec)
 Events.OnConnected.Add(OnConnectedServer)
