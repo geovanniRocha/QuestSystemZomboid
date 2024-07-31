@@ -37,7 +37,7 @@ local function onserverCommandRec (module, command, args)
 
 	if module ~= 'QuestSystem' then return end
 	if command == 'NextQuest' then 
-		QuestSystem = args
+		QuestSystem:SetVaribles(args)
 	end
 	
 end
