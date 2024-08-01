@@ -2,88 +2,61 @@
 local function onClientCommandRec(module, command, player, data)
 	if module ~= 'QuestSystem' then return end
     if command == 'DestinationReached' then
+        LogDebug(1, "onClientCommandRec "..command, QuestSystem.Visited)
         QuestSystem:NextMission() 
         QuestSysSaveData()
-        sendServerCommand("QuestSystem", 'NextQuest', QuestSystem:GetVaribles())
+        sendServerCommand("QuestSystem", 'NextQuest', QuestSystem.Visited)
     elseif command == 'GetDestination' then
-        sendServerCommand("QuestSystem", 'NextQuest', QuestSystem:GetVaribles())
+        LogDebug(1, "onClientCommandRec "..command, QuestSystem.Visited)
+        sendServerCommand("QuestSystem", 'NextQuest', QuestSystem.Visited)
     end
 end
 
 Events.OnClientCommand.Add(onClientCommandRec)
 
 local function OnConnectedServer()
-	sendServerCommand("QuestSystem", 'NextQuest', QuestSystem:GetVaribles())
+	sendServerCommand("QuestSystem", 'NextQuest', QuestSystem.Visited)
 end
 
 
 local function OnServerStarted()
     -- QuestSystem:SetCurrentMission() 
+    
+    LogDebug(1, "OnServerStarted",QuestSystem)
     QuestSystem.Visited = QuestSysLoadData()
-    sendServerCommand("QuestSystem", 'NextQuest', QuestSystem:GetVaribles())  
+    removeDuplicate()
+    LogDebug(1, "OnServerStarted",QuestSystem)
+    sendServerCommand("QuestSystem", 'NextQuest', QuestSystem.Visited)  
 end
 
 
 
 
 function QuestSysSaveData ()
+    
+    LogDebug(1, "QuestSysSaveData Value",QuestSystem)
 	output = getFileOutput("QuestSysProgress.save");
     -- QuestSystem.GetCurrentMission()
-	output:writeChars(serialize(QuestSystem.Visited));
+	output:writeUTF(Serialize(QuestSystem.Visited));
 	endFileOutput();
 end
 
 
 function QuestSysLoadData()
     input = getFileInput("QuestSysProgress.save");
-    local value = 1
+    local value = ""
 	if input ~= nil then
-		value = input:readUTF();
+		value = input:readUTF();                
 		endFileInput();
 	end
-    local v = deserialize(value)
-    removeDuplicate()
+    v = deserialize(value) 
+    LogDebug(1, "QuestSysLoadData DesObject: input:"..dump(input),{})
+    LogDebug(1, "QuestSysLoadData DesObject: value"..dump(value),{})
+    LogDebug(1, "QuestSysLoadData DesObject: v"..dump(v),{})
     return v
 end
 
 
-
-
-function removeDuplicate()
-    t = {}
-        for i = 1, #QuestSystem.MapLocation, 1 do
-            el = QuestSystem.MapLocation[i]
-            for i = 1, #QuestSystem.Visited, 1 do
-                value = QuestSystem.Visited[i]
-                if(el.x == value.x and el.y == value.y) then            
-                    table.insert(t, i)
-            end
-        end
-    end
-    for i = 1, #t, 1 do
-        table.remove(QuestSystem.MapLocation, i)
-    end
-end
-
-function serialize(visited)
-    if visited == nil then return end
-    str = ""
-    for i = 1, #visited, 1 do
-        el = visited[i]
-        str = str .. el.x ..","..el.y..";"
-        
-    end
-    return str
-end
-
-
-function deserialize(str) 
-    t = {}
-    for a, b in string.gmatch(str, "(%d+),(%d+);") do
-        table.insert(t, {x = tonumber(a), y = tonumber(b)})
-    end
-    return t
-end
 
 
 

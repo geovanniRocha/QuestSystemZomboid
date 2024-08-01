@@ -244,6 +244,7 @@ local function overlayPNG3(mapUI, x, y, scale, tex, alpha)
 end
 
 LootMaps.Init.StashMapQuestSys2 = function(mapUI)
+	LogDebug(1, "StashMapQuestSys2", QuestSystem)
 	local x = QuestSystem:GetCurrentMission().x  or 0 
 	local y = QuestSystem:GetCurrentMission().y  or 0 
 	local roundX = Math.round( x / 1000) * 1000

@@ -46,7 +46,7 @@ QuestSystem = {
 
 
 
-function serialize(visited)
+function Serialize(visited)
     a = ""
     for i = 1, #visited, 1 do
         el = visited[i]

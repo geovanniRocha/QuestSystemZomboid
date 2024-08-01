@@ -6,28 +6,13 @@ QuestSystem = {
     distanceToWaypoint = 20;
     mapSize = 1000;
 
-    GetVaribles = function (self)
-        return {self.MapLocation,self.Visited,self.currentMission, self.pointRadius, self.distanceToWaypoint, self.mapSize }
-    end;
-    SetVaribles = function(self, vars)
-        if vars.MapLocation then self.MapLocation = vars.MapLocation end
-        if vars.Visited then self.Visited = vars.Visited end
-        if vars.currentMission then self.currentMission = vars.currentMission end
-        if vars.pointRadius then self.pointRadius = vars.pointRadius end
-        if vars.distanceToWaypoint then self.distanceToWaypoint = vars.distanceToWaypoint end
-        if vars.mapSize then self.mapSize = vars.mapSize end
-        
-    end;
     GetCurrentMission = function (self)
-        if(#self.Visited < 1) then
-            self:NextMission()
-        end
+        -- if(#self.Visited <= 1) then
+        --     self:NextMission()
+        -- end
+        LogDebug(1, "GetCurrentMission", self)
         return self.Visited[#self.Visited]
     end ;
-
-    SetCurrentMission = function (self, value)
-        self.currentMission = value
-    end;
 
     NextMission = function (self)
         local rand = ZombRandBetween(1,#self.MapLocation)
@@ -45,10 +30,13 @@ QuestSystem = {
 
     GetPointRadius = function (self)
         return self.pointRadius
-    end;
-    serialize = function ()
-
-    end
-
+    end; 
         
 }
+
+function debugPrint() 
+    print(Serialize(QuestSystem.Visited))
+    print(QuestSystem.Visited[#QuestSystem.Visited])
+    print(#QuestSystem.Visited)
+    print(QuestSystem.Visited[1])
+end

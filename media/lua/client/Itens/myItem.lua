@@ -31,13 +31,14 @@ function ISCraftAction:perform()
 	end
 end
 
-
-
+ 
 local function onserverCommandRec (module, command, args)
 
 	if module ~= 'QuestSystem' then return end
 	if command == 'NextQuest' then 
-		QuestSystem:SetVaribles(args)
+		LogDebug(1, "onserverCommandRec "..command, args)
+		LogDebug(1, "onserverCommandRec "..command, {Serialize(QuestSystem.Visited)})
+		QuestSystem.Visited = args
 	end
 	
 end
